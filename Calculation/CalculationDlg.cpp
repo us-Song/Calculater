@@ -206,6 +206,9 @@ void CCalculationDlg::OnBnClickeddivide()
 void CCalculationDlg::OnBnClickederase()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_EDitDisplay = ' ';
+	UpdateData(FALSE);
 }
 
 
