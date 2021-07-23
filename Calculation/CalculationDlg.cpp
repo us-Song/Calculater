@@ -52,6 +52,7 @@ END_MESSAGE_MAP()
 
 CCalculationDlg::CCalculationDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_CALCULATION_DIALOG, pParent)
+	, m_EDitDisplay(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -59,12 +60,31 @@ CCalculationDlg::CCalculationDlg(CWnd* pParent /*=nullptr*/)
 void CCalculationDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_EDIT1, m_EDitDisplay);
 }
 
 BEGIN_MESSAGE_MAP(CCalculationDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDOK, &CCalculationDlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDC_BUTTON3, &CCalculationDlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_divide, &CCalculationDlg::OnBnClickeddivide)
+	ON_BN_CLICKED(IDC_erase, &CCalculationDlg::OnBnClickederase)
+	ON_BN_CLICKED(IDC_minus, &CCalculationDlg::OnBnClickedminus)
+	ON_BN_CLICKED(IDC_multiply, &CCalculationDlg::OnBnClickedmultiply)
+	ON_BN_CLICKED(IDC_Num0, &CCalculationDlg::OnBnClickedNum0)
+	ON_BN_CLICKED(IDC_Num1, &CCalculationDlg::OnBnClickedNum1)
+	ON_BN_CLICKED(IDC_Num2, &CCalculationDlg::OnBnClickedNum2)
+	ON_BN_CLICKED(IDC_Num3, &CCalculationDlg::OnBnClickedNum3)
+	ON_BN_CLICKED(IDC_Num4, &CCalculationDlg::OnBnClickedNum4)
+	ON_BN_CLICKED(IDC_Num5, &CCalculationDlg::OnBnClickedNum5)
+	ON_BN_CLICKED(IDC_Num6, &CCalculationDlg::OnBnClickedNum6)
+	ON_BN_CLICKED(IDC_Num7, &CCalculationDlg::OnBnClickedNum7)
+	ON_BN_CLICKED(IDC_Num8, &CCalculationDlg::OnBnClickedNum8)
+	ON_BN_CLICKED(IDC_Num9, &CCalculationDlg::OnBnClickedNum9)
+	ON_BN_CLICKED(IDC_plus, &CCalculationDlg::OnBnClickedplus)
+	ON_BN_CLICKED(IDC_result, &CCalculationDlg::OnBnClickedresult)
 END_MESSAGE_MAP()
 
 
@@ -153,3 +173,112 @@ HCURSOR CCalculationDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CCalculationDlg::OnBnClickedOk()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CDialogEx::OnOK();
+}
+
+
+void CCalculationDlg::OnBnClickedButton3()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickeddivide()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickederase()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedminus()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedmultiply()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedNum0()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedNum1()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedNum2()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedNum3()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedNum4()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedNum5()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedNum6()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedNum7()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedNum8()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedNum9()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedplus()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CCalculationDlg::OnBnClickedresult()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
