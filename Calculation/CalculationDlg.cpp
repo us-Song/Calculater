@@ -8,6 +8,8 @@
 #include "CalculationDlg.h"
 #include "afxdialogex.h"
 
+using namespace std;
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -68,7 +70,7 @@ BEGIN_MESSAGE_MAP(CCalculationDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDOK, &CCalculationDlg::OnBnClickedOk)
-	ON_BN_CLICKED(IDC_BUTTON3, &CCalculationDlg::OnBnClickedButton3)
+	//ON_BN_CLICKED(IDC_BUTTON3, &CCalculationDlg::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_divide, &CCalculationDlg::OnBnClickeddivide)
 	ON_BN_CLICKED(IDC_erase, &CCalculationDlg::OnBnClickederase)
 	ON_BN_CLICKED(IDC_minus, &CCalculationDlg::OnBnClickedminus)
@@ -120,7 +122,9 @@ BOOL CCalculationDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-
+	m_selectedOP = NONE;
+	m_nFirstOperand = 0;
+	m_nSecondOperand = 0;
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -215,6 +219,9 @@ void CCalculationDlg::OnBnClickedmultiply()
 void CCalculationDlg::OnBnClickedNum0()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString str;
+
+	
 }
 
 
