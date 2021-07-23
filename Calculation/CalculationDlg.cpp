@@ -213,14 +213,17 @@ void CCalculationDlg::OnBnClickedminus()
 void CCalculationDlg::OnBnClickedmultiply()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	
 }
 
 
 void CCalculationDlg::OnBnClickedNum0()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CString str;
 
+	UpdateData(TRUE);
+	m_EDitDisplay = m_EDitDisplay + '0';
+	UpdateData(FALSE);
 	
 }
 
@@ -228,54 +231,81 @@ void CCalculationDlg::OnBnClickedNum0()
 void CCalculationDlg::OnBnClickedNum1()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_EDitDisplay = m_EDitDisplay + '1';
+	UpdateData(FALSE);
 }
 
 
 void CCalculationDlg::OnBnClickedNum2()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_EDitDisplay = m_EDitDisplay + '2';
+	UpdateData(FALSE);
 }
 
 
 void CCalculationDlg::OnBnClickedNum3()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_EDitDisplay = m_EDitDisplay + '3';
+	UpdateData(FALSE);
 }
 
 
 void CCalculationDlg::OnBnClickedNum4()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_EDitDisplay = m_EDitDisplay + '4';
+	UpdateData(FALSE);
 }
 
 
 void CCalculationDlg::OnBnClickedNum5()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_EDitDisplay = m_EDitDisplay + '5';
+	UpdateData(FALSE);
 }
 
 
 void CCalculationDlg::OnBnClickedNum6()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_EDitDisplay = m_EDitDisplay + '6';
+	UpdateData(FALSE);
 }
 
 
 void CCalculationDlg::OnBnClickedNum7()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_EDitDisplay = m_EDitDisplay + '7';
+	UpdateData(FALSE);
 }
 
 
 void CCalculationDlg::OnBnClickedNum8()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_EDitDisplay = m_EDitDisplay + '8';
+	UpdateData(FALSE);
 }
 
 
 void CCalculationDlg::OnBnClickedNum9()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_EDitDisplay = m_EDitDisplay + '9';
+	UpdateData(FALSE);
 }
 
 

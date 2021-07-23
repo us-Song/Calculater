@@ -19,11 +19,11 @@
 #define IDC_Num8                        1009
 #define IDC_Num9                        1010
 #define IDC_multiply                    1011
-#define IDC_BUTTON13                    1012
 #define IDC_Num0                        1012
 #define IDC_divide                      1013
 #define IDC_result                      1014
 #define IDC_EDIT1                       1015
+#define IDC_Display                     1015
 #define IDC_erase                       1016
 
 // Next default values for new objects
