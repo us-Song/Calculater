@@ -62,7 +62,7 @@ CCalculationDlg::CCalculationDlg(CWnd* pParent /*=nullptr*/)
 void CCalculationDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_EDIT1, m_EDitDisplay);
+	DDX_Text(pDX, IDC_Display, m_EDitDisplay);
 }
 
 BEGIN_MESSAGE_MAP(CCalculationDlg, CDialogEx)
@@ -206,9 +206,6 @@ void CCalculationDlg::OnBnClickeddivide()
 void CCalculationDlg::OnBnClickederase()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	UpdateData(TRUE);
-	m_EDitDisplay = ' ';
-	UpdateData(FALSE);
 }
 
 
