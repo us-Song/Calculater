@@ -7,6 +7,7 @@
 #include "Calculation.h"
 #include "CalculationDlg.h"
 #include "afxdialogex.h"
+#include <string>
 
 using namespace std;
 
@@ -55,6 +56,7 @@ END_MESSAGE_MAP()
 CCalculationDlg::CCalculationDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_CALCULATION_DIALOG, pParent)
 	, m_EDitDisplay(_T(""))
+	, m_subd(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -63,6 +65,7 @@ void CCalculationDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_Display, m_EDitDisplay);
+	DDX_Text(pDX, IDC_SUBD, m_subd);
 }
 
 BEGIN_MESSAGE_MAP(CCalculationDlg, CDialogEx)
@@ -218,6 +221,7 @@ void CCalculationDlg::OnBnClickedminus()
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	m_selectedOP = MINUS;//-로 설정
 	m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	m_subd = m_subd + '-';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
 	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
 }
@@ -229,6 +233,7 @@ void CCalculationDlg::OnBnClickedmultiply()
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	m_selectedOP = MULTIPLY;//-로 설정
 	m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	m_subd = m_subd + '*';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
 	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
 }
@@ -240,6 +245,7 @@ void CCalculationDlg::OnBnClickedNum0()
 
 	UpdateData(TRUE);
 	m_EDitDisplay = m_EDitDisplay + '0';
+	m_subd = m_subd + '0';
 	UpdateData(FALSE);
 	
 }
@@ -250,6 +256,7 @@ void CCalculationDlg::OnBnClickedNum1()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_EDitDisplay = m_EDitDisplay + '1';
+	m_subd = m_subd + '1';
 	UpdateData(FALSE);
 }
 
@@ -259,6 +266,7 @@ void CCalculationDlg::OnBnClickedNum2()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_EDitDisplay = m_EDitDisplay + '2';
+	m_subd = m_subd + '2';
 	UpdateData(FALSE);
 }
 
@@ -268,6 +276,7 @@ void CCalculationDlg::OnBnClickedNum3()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_EDitDisplay = m_EDitDisplay + '3';
+	m_subd = m_subd + '3';
 	UpdateData(FALSE);
 }
 
@@ -277,6 +286,7 @@ void CCalculationDlg::OnBnClickedNum4()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_EDitDisplay = m_EDitDisplay + '4';
+	m_subd = m_subd + '4';
 	UpdateData(FALSE);
 }
 
@@ -286,6 +296,7 @@ void CCalculationDlg::OnBnClickedNum5()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_EDitDisplay = m_EDitDisplay + '5';
+	m_subd = m_subd + '5';
 	UpdateData(FALSE);
 }
 
@@ -295,6 +306,7 @@ void CCalculationDlg::OnBnClickedNum6()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_EDitDisplay = m_EDitDisplay + '6';
+	m_subd = m_subd + '6';
 	UpdateData(FALSE);
 }
 
@@ -304,6 +316,7 @@ void CCalculationDlg::OnBnClickedNum7()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_EDitDisplay = m_EDitDisplay + '7';
+	m_subd = m_subd + '7';
 	UpdateData(FALSE);
 }
 
@@ -313,6 +326,7 @@ void CCalculationDlg::OnBnClickedNum8()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_EDitDisplay = m_EDitDisplay + '8';
+	m_subd = m_subd + '8';
 	UpdateData(FALSE);
 }
 
@@ -322,6 +336,7 @@ void CCalculationDlg::OnBnClickedNum9()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_EDitDisplay = m_EDitDisplay + '9';
+	m_subd = m_subd + '9';
 	UpdateData(FALSE);
 }
 
@@ -332,6 +347,7 @@ void CCalculationDlg::OnBnClickedplus()
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	m_selectedOP = PLUS;//-로 설정
 	m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	m_subd = m_subd + '+';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
 	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
 }
@@ -342,7 +358,7 @@ void CCalculationDlg::OnBnClickedresult()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_nSecondOperand = _ttoi(m_EDitDisplay);
-
+	m_subd = m_subd + '=';
 	switch (m_selectedOP) {
 	case PLUS:
 		m_nResult = m_nFirstOperand + m_nSecondOperand;
@@ -363,5 +379,8 @@ void CCalculationDlg::OnBnClickedresult()
 	}
 
 	m_EDitDisplay.Format(_T("%d"), m_nResult);
+	char buf[256];// 결과 저장할 배열 선언
+	sprintf_s(buf, "%d", m_nResult);// int형인 결과를 char 형으로 변환
+	m_subd = m_subd + (CString)buf;// m_subd가 CString 이므로 buf 변환
 	UpdateData(FALSE);
 }

@@ -63,4 +63,5 @@ public:
 	afx_msg void OnBnClickedNum9();
 	afx_msg void OnBnClickedplus();
 	afx_msg void OnBnClickedresult();
+	CString m_subd;
 };
