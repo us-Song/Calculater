@@ -195,6 +195,11 @@ void CCalculationDlg::OnBnClickedButton3()
 void CCalculationDlg::OnBnClickeddivide()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
+	m_selectedOP = DIVIDE;//-로 설정
+	m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
+	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
 }
 
 
@@ -207,13 +212,22 @@ void CCalculationDlg::OnBnClickederase()
 void CCalculationDlg::OnBnClickedminus()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
+	m_selectedOP = MINUS;//-로 설정
+	m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
+	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
 }
 
 
 void CCalculationDlg::OnBnClickedmultiply()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	
+	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
+	m_selectedOP = MULTIPLY;//-로 설정
+	m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
+	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
 }
 
 
@@ -312,10 +326,39 @@ void CCalculationDlg::OnBnClickedNum9()
 void CCalculationDlg::OnBnClickedplus()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
+	m_selectedOP = PLUS;//-로 설정
+	m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
+	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
 }
 
 
 void CCalculationDlg::OnBnClickedresult()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_nSecondOperand = _ttoi(m_EDitDisplay);
+
+	switch (m_selectedOP) {
+	case PLUS:
+		m_nResult = m_nFirstOperand + m_nSecondOperand;
+		break;
+
+	case MINUS:
+		m_nResult = m_nFirstOperand - m_nSecondOperand;
+		break;
+
+	case MULTIPLY:
+		m_nResult = m_nFirstOperand * m_nSecondOperand;
+		break;
+
+	case DIVIDE:
+		m_nResult = m_nFirstOperand / m_nSecondOperand;
+		break;
+
+	}
+
+	m_EDitDisplay.Format(_T("%d"), m_nResult);
+	UpdateData(FALSE);
 }
