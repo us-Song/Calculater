@@ -20,6 +20,7 @@ using namespace std;
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 Model model;
+char buf[256];//결과를 저장할 배열
 class CAboutDlg : public CDialogEx
 {
 public:
@@ -92,6 +93,7 @@ BEGIN_MESSAGE_MAP(CCalculationDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_Num9, &CCalculationDlg::OnBnClickedNum9)
 	ON_BN_CLICKED(IDC_plus, &CCalculationDlg::OnBnClickedplus)
 	ON_BN_CLICKED(IDC_result, &CCalculationDlg::OnBnClickedresult)
+	ON_BN_CLICKED(IDC_clear, &CCalculationDlg::OnBnClickedclear)
 END_MESSAGE_MAP()
 
 
@@ -203,6 +205,11 @@ void CCalculationDlg::OnBnClickeddivide()
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	model.m_selectedOP = DIVIDE;//-로 설정
 	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	if (m_subd.Find('=') != -1)//검색 실패시 -1반환
+	{
+		m_subd = buf;
+	}
+	m_subd = m_subd + '/';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
 	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
 }
@@ -211,8 +218,33 @@ void CCalculationDlg::OnBnClickeddivide()
 void CCalculationDlg::OnBnClickederase()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (sizeof(m_subd))// 숫자가 입력돼있으면 진입
+	{
+		int ret = 0;
+		if (model.m_selectedOP == PLUS)//연산자가 +면 
+		{
+			ret = m_subd.Find('+');//+의 인덱스 반환
+		}
+		else if (model.m_selectedOP == MINUS)
+		{
+			ret = m_subd.Find('-');
+		}
+		else if (model.m_selectedOP == MULTIPLY)
+		{
+			ret = m_subd.Find('*');
+		}
+		else if (model.m_selectedOP == DIVIDE)
+		{
+			ret = m_subd.Find('/');
+		}
+
+		m_subd.Delete(ret+1,10);//연산자 뒤 삭제
+		
+	}
+	SetDlgItemText(IDC_SUBD, m_subd);//변경한 m_subd 텍스트에 저장.
 	UpdateData(TRUE);
 	m_EDitDisplay = ' ';
+	m_subd = m_subd;
 	UpdateData(FALSE);
 }
 
@@ -223,10 +255,16 @@ void CCalculationDlg::OnBnClickedminus()
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	model.m_selectedOP = MINUS;//-로 설정
 	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	if (m_subd.Find('=') != -1)
+	{
+		m_subd = buf;
+	}
 	m_subd = m_subd + '-';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
 	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
 }
+
+
 
 
 void CCalculationDlg::OnBnClickedmultiply()
@@ -235,6 +273,10 @@ void CCalculationDlg::OnBnClickedmultiply()
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	model.m_selectedOP = MULTIPLY;//-로 설정
 	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	if (m_subd.Find('=') != -1)
+	{
+		m_subd = buf;
+	}
 	m_subd = m_subd + '*';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
 	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
@@ -349,6 +391,10 @@ void CCalculationDlg::OnBnClickedplus()
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	model.m_selectedOP = PLUS;//-로 설정
 	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	if (m_subd.Find('=')!=-1)
+	{
+		m_subd = buf;
+	}
 	m_subd = m_subd + '+';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
 	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
@@ -366,8 +412,19 @@ void CCalculationDlg::OnBnClickedresult()
 	model.m_nResult = calc.Calc(model.m_nFirstOperand, model.m_selectedOP, model.m_nSecondOperand);
 
 	m_EDitDisplay.Format(_T("%d"), model.m_nResult);
-	char buf[256];// 결과 저장할 배열 선언
+	// 결과 저장할 배열 선언
 	sprintf_s(buf, "%d", model.m_nResult);// int형인 결과를 char 형으로 변환
 	m_subd = m_subd + (CString)buf;// m_subd가 CString 이므로 buf 변환
+	UpdateData(FALSE);
+}
+
+
+void CCalculationDlg::OnBnClickedclear()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	m_EDitDisplay = ' ';
+	m_subd = ' ';
+	memset(buf, 0, 256);//저장한 값 초기화
 	UpdateData(FALSE);
 }
