@@ -10,6 +10,7 @@
 #include "controller.h"
 #include <string>
 #include "Model.h"
+#include<iostream>
 
 using namespace std;
 
@@ -20,7 +21,7 @@ using namespace std;
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 Model model;
-char buf[256];//결과를 저장할 배열
+
 class CAboutDlg : public CDialogEx
 {
 public:
@@ -94,6 +95,8 @@ BEGIN_MESSAGE_MAP(CCalculationDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_plus, &CCalculationDlg::OnBnClickedplus)
 	ON_BN_CLICKED(IDC_result, &CCalculationDlg::OnBnClickedresult)
 	ON_BN_CLICKED(IDC_clear, &CCalculationDlg::OnBnClickedclear)
+//	ON_WM_KEYDOWN()
+//	ON_WM_CHAR()
 END_MESSAGE_MAP()
 
 
@@ -207,7 +210,7 @@ void CCalculationDlg::OnBnClickeddivide()
 	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
 	if (m_subd.Find('=') != -1)//검색 실패시 -1반환
 	{
-		m_subd = buf;
+		m_subd = model.buf;
 	}
 	m_subd = m_subd + '/';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
@@ -257,7 +260,7 @@ void CCalculationDlg::OnBnClickedminus()
 	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
 	if (m_subd.Find('=') != -1)
 	{
-		m_subd = buf;
+		m_subd = model.buf;
 	}
 	m_subd = m_subd + '-';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
@@ -275,7 +278,7 @@ void CCalculationDlg::OnBnClickedmultiply()
 	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
 	if (m_subd.Find('=') != -1)
 	{
-		m_subd = buf;
+		m_subd = model.buf;
 	}
 	m_subd = m_subd + '*';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
@@ -393,7 +396,7 @@ void CCalculationDlg::OnBnClickedplus()
 	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
 	if (m_subd.Find('=')!=-1)
 	{
-		m_subd = buf;
+		m_subd = model.buf;
 	}
 	m_subd = m_subd + '+';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
@@ -413,8 +416,8 @@ void CCalculationDlg::OnBnClickedresult()
 
 	m_EDitDisplay.Format(_T("%d"), model.m_nResult);
 	// 결과 저장할 배열 선언
-	sprintf_s(buf, "%d", model.m_nResult);// int형인 결과를 char 형으로 변환
-	m_subd = m_subd + (CString)buf;// m_subd가 CString 이므로 buf 변환
+	sprintf_s(model.buf, "%d", model.m_nResult);// int형인 결과를 char 형으로 변환
+	m_subd = m_subd + (CString)model.buf;// m_subd가 CString 이므로 buf 변환
 	UpdateData(FALSE);
 }
 
@@ -425,6 +428,20 @@ void CCalculationDlg::OnBnClickedclear()
 	UpdateData(TRUE);
 	m_EDitDisplay = ' ';
 	m_subd = ' ';
-	memset(buf, 0, 256);//저장한 값 초기화
+	memset(model.buf, 0, 256);//저장한 값 초기화
 	UpdateData(FALSE);
+}
+
+
+
+BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+
+	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))//엔터키 누르면 닫히는거 해결
+	{
+		return true;
+	}
+
+	return CDialogEx::PreTranslateMessage(pMsg);
 }

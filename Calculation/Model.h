@@ -21,6 +21,6 @@ public:
 	int m_nFirstOperand;// 계산을 위해 입력한 첫 번째 피 연산자를 저장
 	int m_nSecondOperand;// 두 번째 피 연산자를 지정
 	int m_nResult;// 계산 결과를 저장
-
+	char buf[256];
 
 };

@@ -33,7 +33,5 @@ int controller::Calc(int first, enum FourOP op, int second)
 		return result;
 
 	}
-
-	
-	
 }
+
