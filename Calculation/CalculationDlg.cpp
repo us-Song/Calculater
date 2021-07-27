@@ -7,7 +7,9 @@
 #include "Calculation.h"
 #include "CalculationDlg.h"
 #include "afxdialogex.h"
+#include "controller.h"
 #include <string>
+#include "Model.h"
 
 using namespace std;
 
@@ -17,7 +19,7 @@ using namespace std;
 
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
-
+Model model;
 class CAboutDlg : public CDialogEx
 {
 public:
@@ -123,11 +125,11 @@ BOOL CCalculationDlg::OnInitDialog()
 	//  프레임워크가 이 작업을 자동으로 수행합니다.
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
-
+	
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-	m_selectedOP = NONE;
-	m_nFirstOperand = 0;
-	m_nSecondOperand = 0;
+	model.m_selectedOP = NONE;
+	model.m_nFirstOperand = 0;
+	model.m_nSecondOperand = 0;
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -199,8 +201,8 @@ void CCalculationDlg::OnBnClickeddivide()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
-	m_selectedOP = DIVIDE;//-로 설정
-	m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	model.m_selectedOP = DIVIDE;//-로 설정
+	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
 	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
 }
@@ -219,8 +221,8 @@ void CCalculationDlg::OnBnClickedminus()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
-	m_selectedOP = MINUS;//-로 설정
-	m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	model.m_selectedOP = MINUS;//-로 설정
+	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
 	m_subd = m_subd + '-';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
 	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
@@ -231,8 +233,8 @@ void CCalculationDlg::OnBnClickedmultiply()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
-	m_selectedOP = MULTIPLY;//-로 설정
-	m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	model.m_selectedOP = MULTIPLY;//-로 설정
+	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
 	m_subd = m_subd + '*';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
 	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
@@ -345,8 +347,8 @@ void CCalculationDlg::OnBnClickedplus()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
-	m_selectedOP = PLUS;//-로 설정
-	m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	model.m_selectedOP = PLUS;//-로 설정
+	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
 	m_subd = m_subd + '+';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
 	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
@@ -357,30 +359,15 @@ void CCalculationDlg::OnBnClickedresult()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	m_nSecondOperand = _ttoi(m_EDitDisplay);
+	model.m_nSecondOperand = _ttoi(m_EDitDisplay);
 	m_subd = m_subd + '=';
-	switch (m_selectedOP) {
-	case PLUS:
-		m_nResult = m_nFirstOperand + m_nSecondOperand;
-		break;
+	
+	controller calc;
+	model.m_nResult = calc.Calc(model.m_nFirstOperand, model.m_selectedOP, model.m_nSecondOperand);
 
-	case MINUS:
-		m_nResult = m_nFirstOperand - m_nSecondOperand;
-		break;
-
-	case MULTIPLY:
-		m_nResult = m_nFirstOperand * m_nSecondOperand;
-		break;
-
-	case DIVIDE:
-		m_nResult = m_nFirstOperand / m_nSecondOperand;
-		break;
-
-	}
-
-	m_EDitDisplay.Format(_T("%d"), m_nResult);
+	m_EDitDisplay.Format(_T("%d"), model.m_nResult);
 	char buf[256];// 결과 저장할 배열 선언
-	sprintf_s(buf, "%d", m_nResult);// int형인 결과를 char 형으로 변환
+	sprintf_s(buf, "%d", model.m_nResult);// int형인 결과를 char 형으로 변환
 	m_subd = m_subd + (CString)buf;// m_subd가 CString 이므로 buf 변환
 	UpdateData(FALSE);
 }

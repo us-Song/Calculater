@@ -3,25 +3,27 @@
 //
 
 #pragma once
-
-enum FourOP
+#include "Model.h"
+/*enum FourOP
 {
 	PLUS = 1001,
 	MINUS,
 	MULTIPLY,
 	DIVIDE,
 	NONE
-};
+};*/
 // CCalculationDlg 대화 상자
 class CCalculationDlg : public CDialogEx
 {
 // 생성입니다.
 public:
+	
 	CCalculationDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
-	enum FourOP m_selectedOP;//사용자가 사칙 연산중 무엇을 선택했는지를 저장
-	int m_nFirstOperand;// 계산을 위해 입력한 첫 번째 피 연산자를 저장
-	int m_nSecondOperand;// 두 번째 피 연산자를 지정
-	int m_nResult;// 계산 결과를 저장
+	//enum FourOP m_selectedOP;//사용자가 사칙 연산중 무엇을 선택했는지를 저장
+
+	//int m_nFirstOperand;// 계산을 위해 입력한 첫 번째 피 연산자를 저장
+	//int m_nSecondOperand;// 두 번째 피 연산자를 지정
+	//int m_nResult;// 계산 결과를 저장
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_CALCULATION_DIALOG };

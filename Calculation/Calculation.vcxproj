@@ -186,19 +186,23 @@
     <ClInclude Include="Calculation.h" />
     <ClInclude Include="CalculationDlg.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="controller.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="CalculationDlg.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="controller.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Calculation.rc" />
