@@ -437,11 +437,17 @@ void CCalculationDlg::OnBnClickedclear()
 BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
-
+	controller par;
 	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))//엔터키 누르면 닫히는거 해결
 	{
+		UpdateData(TRUE);
+		
+		m_EDitDisplay = m_EDitDisplay;
+		m_EDitDisplay= m_EDitDisplay+'='+par.parse(m_EDitDisplay);
+		UpdateData(FALSE);
 		return true;
 	}
 
+	
 	return CDialogEx::PreTranslateMessage(pMsg);
 }

@@ -10,6 +10,6 @@ class controller : public CDialogEx
 {
 public:
 	int Calc(int first, enum FourOP op, int second);
-
+	CString parse(CString str);
 
 };
