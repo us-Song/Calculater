@@ -221,30 +221,12 @@ void CCalculationDlg::OnBnClickeddivide()
 
 void CCalculationDlg::OnBnClickederase()
 {
+	controller era;
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	if (sizeof(m_subd))// 숫자가 입력돼있으면 진입
-	{
-		int ret = 0;
-		if (model.m_selectedOP == PLUS)//연산자가 +면 
-		{
-			ret = m_subd.Find('+');//+의 인덱스 반환
-		}
-		else if (model.m_selectedOP == MINUS)
-		{
-			ret = m_subd.Find('-');
-		}
-		else if (model.m_selectedOP == MULTIPLY)
-		{
-			ret = m_subd.Find('*');
-		}
-		else if (model.m_selectedOP == DIVIDE)
-		{
-			ret = m_subd.Find('/');
-		}
 
-		m_subd.Delete(ret+1,10);//연산자 뒤 삭제
-		
-	}
+	m_subd=era.eraser(m_subd, model.m_selectedOP);
+
+	
 	SetDlgItemText(IDC_SUBD, m_subd);//변경한 m_subd 텍스트에 저장.
 	UpdateData(TRUE);
 	m_EDitDisplay = ' ';
@@ -439,21 +421,22 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	controller par;
-	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))//엔터키 누르면 닫히는거 해결
+
+	if((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))//엔터키 누르면 닫히는거 해결
 	{
 		UpdateData(TRUE);
 		
 		m_EDitDisplay = m_EDitDisplay;
 		m_subd = m_EDitDisplay+'='+par.parse(m_EDitDisplay);
 		m_EDitDisplay = par.parse(m_EDitDisplay);
-		//m_editdisplay.SetSel(-1, -1);
-	    UpdateData(FALSE);
+		
+		UpdateData(FALSE);
 		m_editdisplay.SetSel(0, -1);
 		m_editdisplay.ReplaceSel(m_EDitDisplay);
 		m_editdisplay.SetFocus();
 		return true;
 	}
-	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_ESCAPE))
+	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_ESCAPE))// esc 누르면 클리어
 	{
 		UpdateData(TRUE);
 
