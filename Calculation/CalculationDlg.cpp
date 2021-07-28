@@ -453,15 +453,19 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 		m_editdisplay.SetFocus();
 		return true;
 	}
-	/*if (m_subd.Find('=') != -1 && (pMsg->message == WM_KEYDOWN) && ((pMsg->wParam >= 0x6A) && (pMsg->wParam >= 0x6F)))
+	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_ESCAPE))
 	{
 		UpdateData(TRUE);
 
+		m_EDitDisplay = ' ';
 		m_subd = ' ';
+		
+		UpdateData(FALSE);
+		m_editdisplay.SetSel(0, -1);
+		m_editdisplay.ReplaceSel(m_EDitDisplay);
+		m_editdisplay.SetFocus();
 		return true;
-
-
-	}*/
+	}
 	
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
