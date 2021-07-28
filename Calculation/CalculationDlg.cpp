@@ -206,9 +206,17 @@ void CCalculationDlg::OnBnClickedButton3()
 void CCalculationDlg::OnBnClickeddivide()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	controller par;
+	CString c_temp;
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	model.m_selectedOP = DIVIDE;//-로 설정
 	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	c_temp = m_subd;//subd 임시 저장
+	if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
+	{
+		m_subd = par.parse(m_subd);
+	}
+
 	if (m_subd.Find('=') != -1)//검색 실패시 -1반환
 	{
 		m_subd = model.buf;
@@ -238,9 +246,17 @@ void CCalculationDlg::OnBnClickederase()
 void CCalculationDlg::OnBnClickedminus()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	controller par;
+	CString c_temp;
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	model.m_selectedOP = MINUS;//-로 설정
 	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	c_temp = m_subd;//subd 임시 저장
+	if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
+	{
+		m_subd = par.parse(m_subd);
+	}
+
 	if (m_subd.Find('=') != -1)
 	{
 		m_subd = model.buf;
@@ -256,9 +272,17 @@ void CCalculationDlg::OnBnClickedminus()
 void CCalculationDlg::OnBnClickedmultiply()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	controller par;
+	CString c_temp;
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	model.m_selectedOP = MULTIPLY;//-로 설정
 	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	c_temp = m_subd;//subd 임시 저장
+	if ((c_temp.Remove('*') == 1 )||(c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
+	{
+		m_subd = par.parse(m_subd);
+	}
+	
 	if (m_subd.Find('=') != -1)
 	{
 		m_subd = model.buf;
@@ -374,10 +398,19 @@ void CCalculationDlg::OnBnClickedNum9()
 void CCalculationDlg::OnBnClickedplus()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	controller par;
+	CString c_temp;
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	model.m_selectedOP = PLUS;//-로 설정
 	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
-	if (m_subd.Find('=')!=-1)
+	c_temp = m_subd;//subd 임시 저장
+	if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
+	{
+		m_subd = par.parse(m_subd);
+	}
+
+	
+	if (m_subd.Find('=')!=-1)//서브디스플레이에 연속해서 표시, =누르면 결과만 표시되게
 	{
 		m_subd = model.buf;
 	}
@@ -391,16 +424,18 @@ void CCalculationDlg::OnBnClickedresult()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	model.m_nSecondOperand = _ttoi(m_EDitDisplay);
+	//model.m_nSecondOperand = _ttoi(m_EDitDisplay);
 	m_subd = m_subd + '=';
 	
 	controller calc;
-	model.m_nResult = calc.Calc(model.m_nFirstOperand, model.m_selectedOP, model.m_nSecondOperand);
-
-	m_EDitDisplay.Format(_T("%d"), model.m_nResult);
+	//model.m_nResult = calc.Calc(model.m_nFirstOperand, model.m_selectedOP, model.m_nSecondOperand);
+	CString result = calc.parse(m_subd);
+	//m_EDitDisplay.Format(_T("%d"), model.m_nResult);
 	// 결과 저장할 배열 선언
-	sprintf_s(model.buf, "%d", model.m_nResult);// int형인 결과를 char 형으로 변환
-	m_subd = m_subd + (CString)model.buf;// m_subd가 CString 이므로 buf 변환
+	//sprintf_s(model.buf, "%d", model.m_nResult);// int형인 결과를 char 형으로 변환
+	//m_subd = m_subd + (CString)model.buf;// m_subd가 CString 이므로 buf 변환
+	m_EDitDisplay = result;
+	m_subd = m_subd + result;
 	UpdateData(FALSE);
 }
 
