@@ -70,6 +70,7 @@ void CCalculationDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_Display, m_EDitDisplay);
 	DDX_Text(pDX, IDC_SUBD, m_subd);
+	DDX_Control(pDX, IDC_Display, m_editdisplay);
 }
 
 BEGIN_MESSAGE_MAP(CCalculationDlg, CDialogEx)
@@ -443,11 +444,24 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 		UpdateData(TRUE);
 		
 		m_EDitDisplay = m_EDitDisplay;
-		m_EDitDisplay= m_EDitDisplay+'='+par.parse(m_EDitDisplay);
-		UpdateData(FALSE);
+		m_subd = m_EDitDisplay+'='+par.parse(m_EDitDisplay);
+		m_EDitDisplay = par.parse(m_EDitDisplay);
+		//m_editdisplay.SetSel(-1, -1);
+	    UpdateData(FALSE);
+		m_editdisplay.SetSel(0, -1);
+		m_editdisplay.ReplaceSel(m_EDitDisplay);
+		m_editdisplay.SetFocus();
 		return true;
 	}
+	/*if (m_subd.Find('=') != -1 && (pMsg->message == WM_KEYDOWN) && ((pMsg->wParam >= 0x6A) && (pMsg->wParam >= 0x6F)))
+	{
+		UpdateData(TRUE);
 
+		m_subd = ' ';
+		return true;
+
+
+	}*/
 	
 	return CDialogEx::PreTranslateMessage(pMsg);
 }

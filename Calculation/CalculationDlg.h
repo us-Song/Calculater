@@ -70,4 +70,5 @@ public:
 //	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 //	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	CEdit m_editdisplay;
 };
