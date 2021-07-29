@@ -98,6 +98,7 @@ BEGIN_MESSAGE_MAP(CCalculationDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_clear, &CCalculationDlg::OnBnClickedclear)
 //	ON_WM_KEYDOWN()
 //	ON_WM_CHAR()
+//ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 
@@ -424,16 +425,9 @@ void CCalculationDlg::OnBnClickedresult()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	//model.m_nSecondOperand = _ttoi(m_EDitDisplay);
 	m_subd = m_subd + '=';
-	
 	controller calc;
-	//model.m_nResult = calc.Calc(model.m_nFirstOperand, model.m_selectedOP, model.m_nSecondOperand);
 	CString result = calc.parse(m_subd);
-	//m_EDitDisplay.Format(_T("%d"), model.m_nResult);
-	// 결과 저장할 배열 선언
-	//sprintf_s(model.buf, "%d", model.m_nResult);// int형인 결과를 char 형으로 변환
-	//m_subd = m_subd + (CString)model.buf;// m_subd가 CString 이므로 buf 변환
 	m_EDitDisplay = result;
 	m_subd = m_subd + result;
 	UpdateData(FALSE);
@@ -456,7 +450,8 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	controller par;
-
+	CString c_temp;
+	c_temp = m_subd;//subd 임시 저장
 	if((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))//엔터키 누르면 닫히는거 해결
 	{
 		UpdateData(TRUE);
@@ -485,5 +480,74 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 		return true;
 	}
 	
+	if ((pMsg->message == WM_KEYDOWN)&&(GetKeyState(VK_SHIFT)<0))// 연산자 입력처리
+	{
+		if ((pMsg->wParam == 56))//곱셈
+		{
+			UpdateData(TRUE);
+
+			c_temp = m_EDitDisplay ;//subd 임시 저장
+			if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
+			{
+				m_EDitDisplay = par.parse(m_EDitDisplay);
+			}
+			m_EDitDisplay = m_EDitDisplay + '*';
+			UpdateData(FALSE);
+			m_editdisplay.SetSel(0, -1);
+			m_editdisplay.ReplaceSel(m_EDitDisplay);
+			m_editdisplay.SetFocus();
+		}
+		else if ((pMsg->wParam == 191))//나눗셈
+		{
+			UpdateData(TRUE);
+
+			c_temp = m_EDitDisplay;//subd 임시 저장
+			if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
+			{
+				m_EDitDisplay = par.parse(m_EDitDisplay);
+			}
+			m_EDitDisplay = m_EDitDisplay + '/';
+			UpdateData(FALSE);
+			m_editdisplay.SetSel(0, -1);
+			m_editdisplay.ReplaceSel(m_EDitDisplay);
+			m_editdisplay.SetFocus();
+		}
+		else if ((pMsg->wParam == 189))//뺄셈
+		{
+			UpdateData(TRUE);
+
+			c_temp = m_EDitDisplay;//subd 임시 저장
+			if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
+			{
+				m_EDitDisplay = par.parse(m_EDitDisplay);
+			}
+			m_EDitDisplay = m_EDitDisplay + '-';
+			UpdateData(FALSE);
+			m_editdisplay.SetSel(0, -1);
+			m_editdisplay.ReplaceSel(m_EDitDisplay);
+			m_editdisplay.SetFocus();
+		}
+		else if ((pMsg->wParam == 187))//덧셈
+		{
+			UpdateData(TRUE);
+
+			c_temp = m_EDitDisplay;//subd 임시 저장
+			if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
+			{
+				m_EDitDisplay = par.parse(m_EDitDisplay);
+			}
+			m_EDitDisplay = m_EDitDisplay + '+';
+			UpdateData(FALSE);
+			m_editdisplay.SetSel(0, -1);
+			m_editdisplay.ReplaceSel(m_EDitDisplay);
+			m_editdisplay.SetFocus();
+		}
+		
+		return true;
+	}
+	
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
+
+
+
