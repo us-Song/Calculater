@@ -497,36 +497,6 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 			m_editdisplay.ReplaceSel(m_EDitDisplay);
 			m_editdisplay.SetFocus();
 		}
-		else if ((pMsg->wParam == 191))//나눗셈
-		{
-			UpdateData(TRUE);
-
-			c_temp = m_EDitDisplay;//subd 임시 저장
-			if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
-			{
-				m_EDitDisplay = par.parse(m_EDitDisplay);
-			}
-			m_EDitDisplay = m_EDitDisplay + '/';
-			UpdateData(FALSE);
-			m_editdisplay.SetSel(0, -1);
-			m_editdisplay.ReplaceSel(m_EDitDisplay);
-			m_editdisplay.SetFocus();
-		}
-		else if ((pMsg->wParam == 189))//뺄셈
-		{
-			UpdateData(TRUE);
-
-			c_temp = m_EDitDisplay;//subd 임시 저장
-			if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
-			{
-				m_EDitDisplay = par.parse(m_EDitDisplay);
-			}
-			m_EDitDisplay = m_EDitDisplay + '-';
-			UpdateData(FALSE);
-			m_editdisplay.SetSel(0, -1);
-			m_editdisplay.ReplaceSel(m_EDitDisplay);
-			m_editdisplay.SetFocus();
-		}
 		else if ((pMsg->wParam == 187))//덧셈
 		{
 			UpdateData(TRUE);
@@ -542,9 +512,42 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 			m_editdisplay.ReplaceSel(m_EDitDisplay);
 			m_editdisplay.SetFocus();
 		}
-		
 		return true;
+		}
+	if (pMsg->message == WM_KEYDOWN)
+	{
+		if ((pMsg->wParam == 191))//나눗셈
+		{
+			UpdateData(TRUE);
+
+			c_temp = m_EDitDisplay;//subd 임시 저장
+			if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
+			{
+				m_EDitDisplay = par.parse(m_EDitDisplay);
+			}
+			m_EDitDisplay = m_EDitDisplay;
+			UpdateData(FALSE);
+			m_editdisplay.SetSel(0, -1);
+			m_editdisplay.ReplaceSel(m_EDitDisplay);
+			m_editdisplay.SetFocus();
+		}
+		else if ((pMsg->wParam == 189))//뺄셈
+		{
+			UpdateData(TRUE);
+
+			c_temp = m_EDitDisplay;//subd 임시 저장
+			if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
+			{
+				m_EDitDisplay = par.parse(m_EDitDisplay);
+			}
+			m_EDitDisplay = m_EDitDisplay;
+			UpdateData(FALSE);
+			m_editdisplay.SetSel(0, -1);
+			m_editdisplay.ReplaceSel(m_EDitDisplay);
+			m_editdisplay.SetFocus();
+		}
 	}
+		
 	
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
