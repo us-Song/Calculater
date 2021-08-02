@@ -33,12 +33,12 @@ int controller::Calc(int first, enum FourOP op, int second)//°è»ê
 		return result;
 
 	}
+
 }
 
 CString controller::parse(CString str)//ÆÄ½Ì
 {
 	CString str1, str2;
-	int idx;
 	enum FourOP op;
 
 	if (str.Find('+') != -1)
@@ -69,6 +69,7 @@ CString controller::parse(CString str)//ÆÄ½Ì
 	int result=Calc(_ttoi(str1), op, _ttoi(str2));
 	CString Cresult;
 	Cresult.Format(_T("%d"), result);
+
 	return Cresult;
 }
 
