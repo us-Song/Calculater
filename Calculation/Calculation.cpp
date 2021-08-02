@@ -25,9 +25,18 @@ CCalculationApp::CCalculationApp()
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
 	// InitInstance에 모든 중요한 초기화 작업을 배치합니다.
+	
 }
 
+CCalculationApp::~CCalculationApp()
+{
+	// TODO: 여기에 생성 코드를 추가합니다.
+	// InitInstance에 모든 중요한 초기화 작업을 배치합니다.
+	delete cont;
+	delete model;
 
+
+}
 // 유일한 CCalculationApp 개체입니다.
 
 CCalculationApp theApp;

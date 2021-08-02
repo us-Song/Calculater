@@ -12,6 +12,7 @@
 #include "Model.h"
 #include<iostream>
 
+
 using namespace std;
 
 #ifdef _DEBUG
@@ -20,7 +21,6 @@ using namespace std;
 
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
-Model model;
 
 class CAboutDlg : public CDialogEx
 {
@@ -134,9 +134,7 @@ BOOL CCalculationDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 	
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-	model.m_selectedOP = NONE;
-	model.m_nFirstOperand = 0;
-	model.m_nSecondOperand = 0;
+
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -207,20 +205,23 @@ void CCalculationDlg::OnBnClickedButton3()
 void CCalculationDlg::OnBnClickeddivide()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	controller par;
+	
 	CString c_temp;
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
-	model.m_selectedOP = DIVIDE;//-로 설정
-	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	if (theApp.GetModel() != nullptr)
+	{
+		theApp.GetModel()->m_selectedOP = DIVIDE;//-로 설정
+		theApp.GetModel()->m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	}
 	c_temp = m_subd;//subd 임시 저장
 	if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
 	{
-		m_subd = par.parse(m_subd);
+		m_subd = theApp.GetController()->parse(m_subd);
 	}
 
 	if (m_subd.Find('=') != -1)//검색 실패시 -1반환
 	{
-		m_subd = model.buf;
+		m_subd = theApp.GetModel()->buf;
 	}
 	m_subd = m_subd + '/';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
@@ -230,10 +231,10 @@ void CCalculationDlg::OnBnClickeddivide()
 
 void CCalculationDlg::OnBnClickederase()
 {
-	controller era;
+	
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-
-	m_subd=era.eraser(m_subd, model.m_selectedOP);
+	
+	m_subd= theApp.GetController()->eraser(m_subd, theApp.GetModel()->m_selectedOP);
 
 	
 	SetDlgItemText(IDC_SUBD, m_subd);//변경한 m_subd 텍스트에 저장.
@@ -244,24 +245,35 @@ void CCalculationDlg::OnBnClickederase()
 }
 
 
+CCriticalSection g_cs;
 void CCalculationDlg::OnBnClickedminus()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	controller par;
+	
+	Model model;
 	CString c_temp;
+	
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
-	model.m_selectedOP = MINUS;//-로 설정
-	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	
+	//theApp.GetModel()->m_selectedOP = MINUS;//-로 설정
+	
+	if (theApp.GetModel()!= nullptr)
+	{
+		theApp.GetModel()->m_selectedOP = MINUS;//-로 설정
+		theApp.GetModel()->m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	}
 	c_temp = m_subd;//subd 임시 저장
+	
 	if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
 	{
-		m_subd = par.parse(m_subd);
+		m_subd = theApp.GetController()->parse(m_subd);
 	}
 
 	if (m_subd.Find('=') != -1)
 	{
-		m_subd = model.buf;
+		m_subd = theApp.GetModel()->buf;
 	}
+	
 	m_subd = m_subd + '-';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
 	UpdateData(FALSE);// 멤버 변수 값 에딧 컨트롤로 전송
@@ -273,20 +285,23 @@ void CCalculationDlg::OnBnClickedminus()
 void CCalculationDlg::OnBnClickedmultiply()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	controller par;
+	
 	CString c_temp;
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
-	model.m_selectedOP = MULTIPLY;//-로 설정
-	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	if (theApp.GetModel() != nullptr)
+	{
+		theApp.GetModel()->m_selectedOP = MULTIPLY;//-로 설정
+		theApp.GetModel()->m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	}
 	c_temp = m_subd;//subd 임시 저장
 	if ((c_temp.Remove('*') == 1 )||(c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
 	{
-		m_subd = par.parse(m_subd);
+		m_subd = theApp.GetController()->parse(m_subd);
 	}
 	
 	if (m_subd.Find('=') != -1)
 	{
-		m_subd = model.buf;
+		m_subd = theApp.GetModel()->buf;
 	}
 	m_subd = m_subd + '*';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
@@ -399,21 +414,24 @@ void CCalculationDlg::OnBnClickedNum9()
 void CCalculationDlg::OnBnClickedplus()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	controller par;
+	
 	CString c_temp;
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
-	model.m_selectedOP = PLUS;//-로 설정
-	model.m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	if (theApp.GetModel() != nullptr)
+	{
+		theApp.GetModel()->m_selectedOP = PLUS;//-로 설정
+		theApp.GetModel()->m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
+	}
 	c_temp = m_subd;//subd 임시 저장
 	if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
 	{
-		m_subd = par.parse(m_subd);
+		m_subd = theApp.GetController()->parse(m_subd);
 	}
 
 	
 	if (m_subd.Find('=')!=-1)//서브디스플레이에 연속해서 표시, =누르면 결과만 표시되게
 	{
-		m_subd = model.buf;
+		m_subd = theApp.GetModel()->buf;
 	}
 	m_subd = m_subd + '+';
 	m_EDitDisplay = ' ';// 에딧컨트롤 초기화
@@ -426,8 +444,8 @@ void CCalculationDlg::OnBnClickedresult()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	m_subd = m_subd + '=';
-	controller calc;
-	CString result = calc.parse(m_subd);
+	
+	CString result = theApp.GetController()->parse(m_subd);
 	m_EDitDisplay = result;
 	m_subd = m_subd + result;
 	UpdateData(FALSE);
@@ -440,7 +458,7 @@ void CCalculationDlg::OnBnClickedclear()
 	UpdateData(TRUE);
 	m_EDitDisplay = ' ';
 	m_subd = ' ';
-	memset(model.buf, 0, 256);//저장한 값 초기화
+	memset(theApp.GetModel()->buf, 0, 256);//저장한 값 초기화
 	UpdateData(FALSE);
 }
 
@@ -449,7 +467,7 @@ void CCalculationDlg::OnBnClickedclear()
 BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
-	controller par;
+	
 	CString c_temp;
 	c_temp = m_subd;//subd 임시 저장
 	if((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))//엔터키 누르면 닫히는거 해결
@@ -457,8 +475,8 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 		UpdateData(TRUE);
 		
 		m_EDitDisplay = m_EDitDisplay;
-		m_subd = m_EDitDisplay+'='+par.parse(m_EDitDisplay);
-		m_EDitDisplay = par.parse(m_EDitDisplay);
+		m_subd = m_EDitDisplay+'='+ theApp.GetController()->parse(m_EDitDisplay);
+		m_EDitDisplay = theApp.GetController()->parse(m_EDitDisplay);
 		
 		UpdateData(FALSE);
 		m_editdisplay.SetSel(0, -1);
@@ -489,7 +507,7 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 			c_temp = m_EDitDisplay ;//subd 임시 저장
 			if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
 			{
-				m_EDitDisplay = par.parse(m_EDitDisplay);
+				m_EDitDisplay = theApp.GetController()->parse(m_EDitDisplay);
 			}
 			m_EDitDisplay = m_EDitDisplay + '*';
 			UpdateData(FALSE);
@@ -504,7 +522,7 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 			c_temp = m_EDitDisplay;//subd 임시 저장
 			if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
 			{
-				m_EDitDisplay = par.parse(m_EDitDisplay);
+				m_EDitDisplay = theApp.GetController()->parse(m_EDitDisplay);
 			}
 			m_EDitDisplay = m_EDitDisplay + '+';
 			UpdateData(FALSE);
@@ -523,7 +541,7 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 			c_temp = m_EDitDisplay;//subd 임시 저장
 			if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
 			{
-				m_EDitDisplay = par.parse(m_EDitDisplay);
+				m_EDitDisplay = theApp.GetController()->parse(m_EDitDisplay);
 			}
 			m_EDitDisplay = m_EDitDisplay;
 			UpdateData(FALSE);
@@ -538,7 +556,7 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 			c_temp = m_EDitDisplay;//subd 임시 저장
 			if ((c_temp.Remove('*') == 1) || (c_temp.Remove('+') == 1) || (c_temp.Remove('/') == 1) || (c_temp.Remove('-') == 1))//다른 연산자 존재하면 먼저 처리
 			{
-				m_EDitDisplay = par.parse(m_EDitDisplay);
+				m_EDitDisplay = theApp.GetController()->parse(m_EDitDisplay);
 			}
 			m_EDitDisplay = m_EDitDisplay;
 			UpdateData(FALSE);

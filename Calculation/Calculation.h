@@ -9,21 +9,39 @@
 #endif
 
 #include "resource.h"		// 주 기호입니다.
-
+#include "controller.h"
 
 // CCalculationApp:
 // 이 클래스의 구현에 대해서는 Calculation.cpp을(를) 참조하세요.
 //
 
+
+
 class CCalculationApp : public CWinApp
 {
+private:
+	Model* model;
+	controller* cont;
 public:
 	CCalculationApp();
+	~CCalculationApp();
 
 // 재정의입니다.
 public:
 	virtual BOOL InitInstance();
+	
+	
+	Model* GetModel()
+	{
+		
+		return model;
+		
+	}
 
+	controller* GetController()
+	{
+		return cont;
+	}
 // 구현입니다.
 
 	DECLARE_MESSAGE_MAP()

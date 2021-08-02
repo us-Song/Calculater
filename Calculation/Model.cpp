@@ -11,3 +11,10 @@ using namespace std;
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+
+Model::Model()
+{
+	m_selectedOP = NONE;
+	m_nFirstOperand = 0;
+	m_nSecondOperand = 0;
+}
