@@ -30,7 +30,6 @@ public:
 public:
 	virtual BOOL InitInstance();
 	
-	
 	Model* GetModel()
 	{
 		

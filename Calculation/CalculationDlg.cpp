@@ -481,11 +481,11 @@ void CCalculationDlg::OnBnClickedresult()
 	
 	CString result = theApp.GetController()->parse(get_subd());
 
-
-
-
-
 	set_Editd(result);
+	if (result == ' ')
+	{
+		set_subd((CString)' ');
+	}
 	set_subd(get_subd() + result);
 	UpdateData(FALSE);
 }
@@ -514,8 +514,16 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 		UpdateData(TRUE);
 		
 		set_Editd(get_Editd());
-		set_subd(get_Editd()+'='+ theApp.GetController()->parse(get_Editd()));
-		set_Editd(theApp.GetController()->parse(get_Editd()));
+		if (theApp.GetController()->parse(get_Editd()) == ' ')
+		{
+			set_subd((CString)' ');
+			set_Editd((CString)' ');
+		}
+		else
+		{
+			set_subd(get_Editd() + '=' + theApp.GetController()->parse(get_Editd()));
+			set_Editd(theApp.GetController()->parse(get_Editd()));
+		}
 		
 		UpdateData(FALSE);
 		m_editdisplay.SetSel(0, -1);

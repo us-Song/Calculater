@@ -66,15 +66,23 @@ CString controller::parse(CString str)//파싱
 		AfxExtractSubString(str2, str, 1, '/');
 		op = DIVIDE;
 	}
-
-	if (str1 =="" || op == NONE || str2 == "")
+	else
 	{
+		controller cont;
+		CCalculationDlg one;
 		
 		MessageBox(_T("다시 입력하세요"), _T("error"), MB_OK);
 		
-		return 0;
+		return (CString)' ';
 	}
 
+	if (!(str2>=(CString)'0'&&str2<= (CString)'9'))
+	{
+		MessageBox(_T("다시 입력하세요"), _T("error"), MB_OK);
+
+		return (CString)' ';
+	}
+	
 	int result=Calc(_ttoi(str1), op, _ttoi(str2));
 	CString Cresult;
 	Cresult.Format(_T("%d"), result);
