@@ -12,6 +12,7 @@ class controller : public CDialogEx
 	Model* model;
 
 public:
+
 	int Calc(int first, enum FourOP op, int second);
 	CString parse(CString str);
 	CString eraser(CString str, enum FourOP op);

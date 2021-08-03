@@ -230,6 +230,7 @@ void CCalculationDlg::OnBnClickedButton3()
 }
 
 
+
 void CCalculationDlg::OnBnClickeddivide()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -238,7 +239,7 @@ void CCalculationDlg::OnBnClickeddivide()
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	if (theApp.GetModel() != nullptr)
 	{
-		theApp.GetModel()->m_selectedOP = DIVIDE;//-로 설정
+		theApp.GetModel()->m_selectedOP = FourOP::DIVIDE;//-로 설정
 		theApp.GetModel()->m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
 	}
 	set_temp(get_subd());//subd 임시 저장
@@ -292,9 +293,10 @@ void CCalculationDlg::OnBnClickedminus()
 	
 	if (theApp.GetModel()!= nullptr)
 	{
-		theApp.GetModel()->m_selectedOP = MINUS;//-로 설정
+		theApp.GetModel()->m_selectedOP = FourOP::MINUS;//-로 설정
 		theApp.GetModel()->m_nFirstOperand = _ttoi(m_EDitDisplay);//문자열 정수로 변환
 	}
+
 	set_temp(get_subd());//subd 임시 저장
 	
 	if ((get_temp().Remove('*') == 1) || (get_temp().Remove('+') == 1) || (get_temp().Remove('/') == 1) || (get_temp().Remove('-')))//다른 연산자 존재하면 먼저 처리
@@ -323,7 +325,7 @@ void CCalculationDlg::OnBnClickedmultiply()
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	if (theApp.GetModel() != nullptr)
 	{
-		theApp.GetModel()->m_selectedOP = MULTIPLY;//-로 설정
+		theApp.GetModel()->m_selectedOP = FourOP::MULTIPLY;//-로 설정
 		theApp.GetModel()->m_nFirstOperand = _ttoi(get_Editd());//문자열 정수로 변환
 	}
 	set_temp(get_subd());//subd 임시 저장
@@ -452,7 +454,7 @@ void CCalculationDlg::OnBnClickedplus()
 	UpdateData(TRUE);// 에딧 컨트롤에 적힌 값 가져옴
 	if (theApp.GetModel() != nullptr)
 	{
-		theApp.GetModel()->m_selectedOP = PLUS;//-로 설정
+		theApp.GetModel()->m_selectedOP = FourOP::PLUS;//-로 설정
 		theApp.GetModel()->m_nFirstOperand = _ttoi(get_Editd());//문자열 정수로 변환
 	}
 	set_temp(get_subd());//subd 임시 저장
@@ -482,10 +484,12 @@ void CCalculationDlg::OnBnClickedresult()
 	CString result = theApp.GetController()->parse(get_subd());
 
 	set_Editd(result);
+
 	if (result == ' ')
 	{
 		set_subd((CString)' ');
 	}
+
 	set_subd(get_subd() + result);
 	UpdateData(FALSE);
 }
@@ -579,6 +583,7 @@ BOOL CCalculationDlg::PreTranslateMessage(MSG* pMsg)
 		}
 		return true;
 		}
+
 	if (pMsg->message == WM_KEYDOWN)
 	{
 		if ((pMsg->wParam == 191))//나눗셈

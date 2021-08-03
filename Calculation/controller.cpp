@@ -17,18 +17,18 @@ int controller::Calc(int first, enum FourOP op, int second)//계산
 	int result;
 
 	switch (op) {
-	case PLUS:
+	case FourOP::PLUS:
 		result = first + second;
 		return result;
-	case MINUS:
+	case FourOP::MINUS:
 		result = first - second;
 		return result;
 
-	case MULTIPLY:
+	case FourOP::MULTIPLY:
 		result = first * second;
 		return result;
 
-	case DIVIDE:
+	case FourOP::DIVIDE:
 		result =first / second;
 		return result;
 
@@ -46,25 +46,25 @@ CString controller::parse(CString str)//파싱
 	{
 		AfxExtractSubString(str1, str, 0, '+');
 		AfxExtractSubString(str2, str, 1, '+');
-		op = PLUS;
+		op = FourOP::PLUS;
 	}
 	else if (str.Find('-') != -1)
 	{
 		AfxExtractSubString(str1, str, 0, '-');
 		AfxExtractSubString(str2, str, 1, '-');
-		op = MINUS;
+		op = FourOP::MINUS;
 	}
 	else if (str.Find('*') != -1)
 	{
 		AfxExtractSubString(str1, str, 0, '*');
 		AfxExtractSubString(str2, str, 1, '*');
-		op = MULTIPLY;
+		op = FourOP::MULTIPLY;
 	}
 	else if (str.Find('/') != -1)
 	{
 		AfxExtractSubString(str1, str, 0, '/');
 		AfxExtractSubString(str2, str, 1, '/');
-		op = DIVIDE;
+		op = FourOP::DIVIDE;
 	}
 	else
 	{
@@ -96,19 +96,19 @@ CString controller::eraser(CString subd, enum FourOP op)//지우기
 	if (sizeof(subd))// 숫자가 입력돼있으면 진입
 	{
 		int ret = 0;
-		if (op == PLUS)//연산자가 +면 
+		if (op == FourOP::PLUS)//연산자가 +면 
 		{
 			ret = subd.Find('+');//+의 인덱스 반환
 		}
-		else if (op == MINUS)
+		else if (op == FourOP::MINUS)
 		{
 			ret = subd.Find('-');
 		}
-		else if (op == MULTIPLY)
+		else if (op == FourOP::MULTIPLY)
 		{
 			ret = subd.Find('*');
 		}
-		else if (op == DIVIDE)
+		else if (op == FourOP::DIVIDE)
 		{
 			ret = subd.Find('/');
 		}

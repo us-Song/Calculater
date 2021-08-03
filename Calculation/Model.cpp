@@ -14,7 +14,7 @@ using namespace std;
 
 Model::Model()
 {
-	m_selectedOP = NONE;
+	m_selectedOP = FourOP::NONE;
 	m_nFirstOperand = 0;
 	m_nSecondOperand = 0;
 }

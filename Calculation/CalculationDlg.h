@@ -40,7 +40,7 @@ private:
 	
 public:
 	
-	CEdit m_editdisplay;
+	CEdit m_editdisplay;//임시객체
 	
 	void set_subd(CString value);
 	void set_Editd(CString value);
