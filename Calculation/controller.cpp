@@ -34,6 +34,7 @@ int controller::Calc(int first, enum FourOP op, int second)//계산
 
 	}
 
+	
 }
 
 CString controller::parse(CString str)//파싱
@@ -64,6 +65,14 @@ CString controller::parse(CString str)//파싱
 		AfxExtractSubString(str1, str, 0, '/');
 		AfxExtractSubString(str2, str, 1, '/');
 		op = DIVIDE;
+	}
+
+	if (str1 =="" || op == NONE || str2 == "")
+	{
+		
+		MessageBox(_T("다시 입력하세요"), _T("error"), MB_OK);
+		
+		return 0;
 	}
 
 	int result=Calc(_ttoi(str1), op, _ttoi(str2));

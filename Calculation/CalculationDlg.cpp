@@ -480,6 +480,11 @@ void CCalculationDlg::OnBnClickedresult()
 	set_subd(m_subd + '=');
 	
 	CString result = theApp.GetController()->parse(get_subd());
+
+
+
+
+
 	set_Editd(result);
 	set_subd(get_subd() + result);
 	UpdateData(FALSE);
@@ -492,7 +497,7 @@ void CCalculationDlg::OnBnClickedclear()
 	UpdateData(TRUE);
 	set_Editd(CString(' '));
 	set_subd(CString(' '));
-	memset(theApp.GetModel()->buf, 0, 256);//저장한 값 초기화
+	//memset(theApp.GetModel()->buf, 0, 256);//저장한 값 초기화
 	UpdateData(FALSE);
 }
 
